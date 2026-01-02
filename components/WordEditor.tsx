@@ -21,6 +21,10 @@ import {
     Type,
     Printer,
     Download,
+    ZoomIn,
+    ZoomOut,
+    Palette,
+    Maximize2,
 } from 'lucide-react';
 
 interface WordEditorProps {
@@ -41,6 +45,17 @@ export default function WordEditor({
     const [fontSize, setFontSize] = useState('14');
     const [fontFamily, setFontFamily] = useState('Times New Roman');
     const [hasChanges, setHasChanges] = useState(false);
+
+    // New formatting options
+    const [lineSpacing, setLineSpacing] = useState('1.5');
+    const [margins, setMargins] = useState({
+        top: '1.5in',
+        bottom: '1.5in',
+        left: '1.75in',
+        right: '1.0in'
+    });
+    const [zoom, setZoom] = useState(100);
+    const [textColor, setTextColor] = useState('#000000');
 
     useEffect(() => {
         if (editorRef.current && editorRef.current.innerHTML !== initialContent) {
@@ -277,23 +292,143 @@ export default function WordEditor({
                         <ListOrdered className="w-4 h-4" />
                     </button>
                 </div>
+
+                {/* New Row - Page Formatting */}
+                <div className="flex items-center gap-2 px-4 py-2 border-t border-gray-200 flex-wrap bg-gray-50">
+                    {/* Line Spacing */}
+                    <div className="flex items-center gap-1">
+                        <Maximize2 className="w-4 h-4 text-gray-600" />
+                        <span className="text-xs text-gray-600">Line:</span>
+                        <select
+                            value={lineSpacing}
+                            onChange={(e) => setLineSpacing(e.target.value)}
+                            className="px-2 py-1 border border-gray-300 rounded text-xs w-16"
+                            title="Line Spacing"
+                        >
+                            <option value="1.0">1.0</option>
+                            <option value="1.15">1.15</option>
+                            <option value="1.5">1.5</option>
+                            <option value="2.0">2.0</option>
+                            <option value="2.5">2.5</option>
+                            <option value="3.0">3.0</option>
+                        </select>
+                    </div>
+
+                    <div className="w-px h-6 bg-gray-300 mx-1" />
+
+                    {/* Margins */}
+                    <div className="flex items-center gap-1">
+                        <span className="text-xs text-gray-600 font-medium">Margins (in):</span>
+                        <div className="flex gap-1">
+                            <input
+                                type="number"
+                                value={parseFloat(margins.top)}
+                                onChange={(e) => setMargins({ ...margins, top: e.target.value + 'in' })}
+                                className="w-12 px-1 py-1 border border-gray-300 rounded text-xs text-center"
+                                step="0.1"
+                                min="0.5"
+                                max="3"
+                                title="Top Margin"
+                                placeholder="T"
+                            />
+                            <input
+                                type="number"
+                                value={parseFloat(margins.bottom)}
+                                onChange={(e) => setMargins({ ...margins, bottom: e.target.value + 'in' })}
+                                className="w-12 px-1 py-1 border border-gray-300 rounded text-xs text-center"
+                                step="0.1"
+                                min="0.5"
+                                max="3"
+                                title="Bottom Margin"
+                                placeholder="B"
+                            />
+                            <input
+                                type="number"
+                                value={parseFloat(margins.left)}
+                                onChange={(e) => setMargins({ ...margins, left: e.target.value + 'in' })}
+                                className="w-12 px-1 py-1 border border-gray-300 rounded text-xs text-center"
+                                step="0.1"
+                                min="0.5"
+                                max="3"
+                                title="Left Margin"
+                                placeholder="L"
+                            />
+                            <input
+                                type="number"
+                                value={parseFloat(margins.right)}
+                                onChange={(e) => setMargins({ ...margins, right: e.target.value + 'in' })}
+                                className="w-12 px-1 py-1 border border-gray-300 rounded text-xs text-center"
+                                step="0.1"
+                                min="0.5"
+                                max="3"
+                                title="Right Margin"
+                                placeholder="R"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="w-px h-6 bg-gray-300 mx-1" />
+
+                    {/* Zoom */}
+                    <div className="flex items-center gap-1">
+                        <button
+                            onClick={() => setZoom(Math.max(50, zoom - 10))}
+                            className="p-1 hover:bg-gray-100 rounded"
+                            title="Zoom Out"
+                        >
+                            <ZoomOut className="w-4 h-4" />
+                        </button>
+                        <span className="text-xs font-medium w-12 text-center">{zoom}%</span>
+                        <button
+                            onClick={() => setZoom(Math.min(200, zoom + 10))}
+                            className="p-1 hover:bg-gray-100 rounded"
+                            title="Zoom In"
+                        >
+                            <ZoomIn className="w-4 h-4" />
+                        </button>
+                    </div>
+
+                    <div className="w-px h-6 bg-gray-300 mx-1" />
+
+                    {/* Text Color */}
+                    <div className="flex items-center gap-1">
+                        <Palette className="w-4 h-4 text-gray-600" />
+                        <input
+                            type="color"
+                            value={textColor}
+                            onChange={(e) => {
+                                setTextColor(e.target.value);
+                                execCommand('foreColor', e.target.value);
+                            }}
+                            className="w-8 h-6 border border-gray-300 rounded cursor-pointer"
+                            title="Text Color"
+                        />
+                    </div>
+                </div>
             </div>
 
             {/* Editor Content - Word-like Page */}
             <div className="flex-1 overflow-auto p-8 bg-gray-100">
-                <div className="max-w-[8.5in] mx-auto bg-white shadow-lg">
+                <div
+                    className="max-w-[8.5in] mx-auto bg-white shadow-lg transition-transform"
+                    style={{ transform: `scale(${zoom / 100})` }}
+                >
                     {/* A4 Paper */}
                     <div
                         ref={editorRef}
                         contentEditable
                         suppressContentEditableWarning
                         onInput={handleContentChange}
-                        className="min-h-[11in] p-[1.5in_1.75in_1.5in_1.0in] outline-none focus:ring-2 focus:ring-blue-500"
+                        className="min-h-[11in] outline-none focus:ring-2 focus:ring-blue-500"
                         style={{
                             fontFamily: 'Times New Roman',
                             fontSize: '14pt',
-                            lineHeight: '1.5',
+                            lineHeight: lineSpacing,
                             textAlign: 'justify',
+                            paddingTop: margins.top,
+                            paddingBottom: margins.bottom,
+                            paddingLeft: margins.left,
+                            paddingRight: margins.right,
                         }}
                         spellCheck={true}
                     />

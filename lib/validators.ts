@@ -46,6 +46,7 @@ export const vakalathFormSchema = z.object({
 
     // Arrays
     parties: z.array(partySchema).default([]),
+    acts: z.array(actSchema).default([]),
     applications: z.array(applicationSchema).default([]),
 
     // Advocate Details

@@ -171,8 +171,9 @@ export async function generatePDF(data: VakalathFormValues, fontSize: number = 1
     y2 -= 50;
 
     // Parties (simple format for page 2)
+    const petitionerRole = petitioners[0]?.role || 'Petitioner';
     petitioners.forEach((p, i) => {
-        const text = `${p.name}     -     ${data.applicantStatus}`;
+        const text = `${p.name}     -     ${petitionerRole}`;
         drawText2(text, 150, y2);
         y2 -= 20;
     });
@@ -192,7 +193,7 @@ export async function generatePDF(data: VakalathFormValues, fontSize: number = 1
     drawCentered2(docTitle, y2, { font: fontBold, size: fontSize + 4 });
     y2 -= 30;
 
-    drawCentered2(`on behalf of the ${data.applicantStatus}`, y2, { size: fontSize - 1 });
+    drawCentered2(`on behalf of the ${petitionerRole}`, y2, { size: fontSize - 1 });
 
     y2 -= 100;
     drawCentered2("____________________", y2);

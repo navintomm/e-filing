@@ -81,8 +81,8 @@ export default function PreviewPage() {
         if (!data) return;
 
         try {
-            // generatePDF returns Uint8Array and takes fontSize as second parameter
-            const pdfBytes = await generatePDF(data, 14);
+            // generatePDF returns Uint8Array
+            const pdfBytes = await generatePDF(data);
             const blob = new Blob([pdfBytes as any], { type: 'application/pdf' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
