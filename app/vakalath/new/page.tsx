@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { vakalathFormSchema, VakalathFormValues } from "@/lib/validators";
+import { vakalathFormSchema, VakalathFormValues } from "@/lib/vakalath-validators";
 import { useState } from "react";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase";

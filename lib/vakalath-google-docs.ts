@@ -1,4 +1,4 @@
-import { VakalathFormValues } from './validators';
+import { VakalathFormValues } from './vakalath-validators';
 
 /**
  * Build structured content for Google Docs API from Vakalath form data

@@ -1,4 +1,4 @@
-import { Party } from './validators';
+import { Party } from './vakalath-validators';
 
 /**
  * Template Helper Utilities for Vakalath Document Generation

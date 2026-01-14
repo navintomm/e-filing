@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { X, FileDown, Type, AlignLeft, Square } from "lucide-react";
-import { VakalathFormValues } from "@/lib/validators";
-import { generatePDF, generateDOCX } from "@/lib/generator";
+import { VakalathFormValues } from "@/lib/vakalath-validators";
+import { generatePDF } from "@/lib/generator-kerala-template";
 import { createVakalathInGoogleDocs } from "@/lib/vakalath-google-docs";
 import { Loader2 } from "lucide-react";
 
@@ -29,7 +29,7 @@ export function PreviewModal({
     const [lineHeight, setLineHeight] = useState(1.5); // Default 1.5 line spacing
     const [margins, setMargins] = useState({
         top: 108,    // 1.5" in pixels (1.5 * 72)
-        bottom: 108, // 1.5" 
+        bottom: 108, // 1.5"
         left: 126,   // 1.75"
         right: 72    // 1.0"
     });
@@ -51,19 +51,22 @@ export function PreviewModal({
         }
     };
 
+    /*
     const handleDownloadDOCX = async () => {
         try {
-            const blob = await generateDOCX(data);
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `Vakalath_Preview.docx`;
-            link.click();
+            // const blob = await generateDOCX(data);
+            // const url = URL.createObjectURL(blob);
+            // const link = document.createElement('a');
+            // link.href = url;
+            // link.download = `Vakalath_Preview.docx`;
+            // link.click();
+            alert("DOCX generation currently unavailable in legacy preview");
         } catch (error) {
             console.error('Error generating DOCX:', error);
             alert('Failed to generate DOCX');
         }
     };
+    */
 
     const [isCreatingGoogleDoc, setIsCreatingGoogleDoc] = useState(false);
 
@@ -231,13 +234,13 @@ export function PreviewModal({
                         )}
                         Google Doc
                     </button>
-                    <button
+                    {/* <button
                         onClick={handleDownloadDOCX}
                         className="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-500 shadow-sm transition-colors"
                     >
                         <FileDown className="w-4 h-4 mr-2" />
                         DOCX
-                    </button>
+                    </button> */}
                 </div>
 
                 {/* Preview Content */}

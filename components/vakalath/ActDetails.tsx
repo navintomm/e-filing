@@ -1,5 +1,5 @@
 import { useFieldArray, Control, UseFormRegister, FieldErrors } from "react-hook-form";
-import { VakalathFormValues } from "@/lib/validators";
+import { VakalathFormValues } from "@/lib/vakalath-validators";
 import { Plus, Trash2 } from "lucide-react";
 import { FormInput } from "@/components/FormInput";
 import { FormCombobox } from "@/components/FormSelect";

@@ -1,5 +1,5 @@
 import { UseFormRegister, FieldErrors, Control, UseFormSetValue, UseFormWatch } from "react-hook-form";
-import { VakalathFormValues } from "@/lib/validators";
+import { VakalathFormValues } from "@/lib/vakalath-validators";
 import { FormInput } from "@/components/FormInput";
 import { useEffect, useState } from "react";
 import { UserCheck, Users } from "lucide-react";

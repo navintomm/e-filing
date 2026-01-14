@@ -125,13 +125,22 @@ export default function DashboardPage() {
                         Manage your Vakalathnama drafts and generated documents.
                     </p>
                 </div>
-                <Link
-                    href="/vakalath/new"
-                    className="btn-legal-primary inline-flex items-center gap-2"
-                >
-                    <Plus className="h-4 w-4" />
-                    Start Drafting
-                </Link>
+                <div className="flex gap-3">
+                    <Link
+                        href="/suit/new"
+                        className="btn-legal-primary inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 border-0"
+                    >
+                        <Plus className="h-4 w-4" />
+                        New Suit
+                    </Link>
+                    <Link
+                        href="/vakalath/new"
+                        className="btn-legal-outline inline-flex items-center gap-2"
+                    >
+                        <FileText className="h-4 w-4" />
+                        Vakalath Only
+                    </Link>
+                </div>
             </div>
 
             {error && (
@@ -164,11 +173,11 @@ export default function DashboardPage() {
                         Get started by creating your first Vakalathnama draft.
                     </p>
                     <Link
-                        href="/vakalath/new"
-                        className="btn-legal-primary inline-flex items-center gap-2"
+                        href="/suit/new"
+                        className="btn-legal-primary inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 border-0"
                     >
                         <Plus className="h-4 w-4" />
-                        Create First Draft
+                        Create Suit Draft
                     </Link>
                 </div>
             ) : (

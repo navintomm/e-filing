@@ -1,7 +1,7 @@
 "use client";
 
 import { UseFormRegister, FieldErrors, Control, UseFormSetValue, UseFormWatch } from "react-hook-form";
-import { VakalathFormValues } from "@/lib/validators";
+import { VakalathFormValues } from "@/lib/vakalath-validators";
 import { FormInput } from "@/components/FormInput";
 import { FormCombobox } from "@/components/FormSelect";
 import { FormSearchSelect } from "@/components/FormSearchSelect";

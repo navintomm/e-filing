@@ -4,8 +4,8 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { VakalathFormValues } from "@/lib/validators";
-import { generatePDF, generateDOCX } from "@/lib/generator";
+import { VakalathFormValues } from "@/lib/vakalath-validators";
+import { generatePDF } from "@/lib/generator-kerala-template";
 import WordEditor from '@/components/WordEditor';
 import { generateEditableHTML } from '@/lib/html-generator';
 import BackButton from "@/components/BackButton";
@@ -110,33 +110,34 @@ export default function PreviewPage() {
     };
 
     const handleDownloadDOCX = async () => {
-        if (!data) return;
+        alert("DOCX generation currently unavailable in legacy preview");
+        // if (!data) return;
 
-        try {
-            const blob = await generateDOCX(data);
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
+        // try {
+        //     const blob = await generateDOCX(data);
+        //     const url = URL.createObjectURL(blob);
+        //     const link = document.createElement('a');
+        //     link.href = url;
 
-            const firstPetitioner = data.parties.find(p =>
-                p.role?.toLowerCase().includes('petitioner') ||
-                p.role?.toLowerCase().includes('plaintiff') ||
-                p.role?.toLowerCase().includes('complainant') ||
-                p.role?.toLowerCase().includes('applicant')
-            );
+        //     const firstPetitioner = data.parties.find(p =>
+        //         p.role?.toLowerCase().includes('petitioner') ||
+        //         p.role?.toLowerCase().includes('plaintiff') ||
+        //         p.role?.toLowerCase().includes('complainant') ||
+        //         p.role?.toLowerCase().includes('applicant')
+        //     );
 
-            link.download = `Vakalath_${firstPetitioner?.name || 'Document'}_${data.district}.docx`;
-            link.click();
-            URL.revokeObjectURL(url);
+        //     link.download = `Vakalath_${firstPetitioner?.name || 'Document'}_${data.district}.docx`;
+        //     link.click();
+        //     URL.revokeObjectURL(url);
 
-            // Update status
-            if (id) {
-                await updateDoc(doc(db, "drafts", id), { status: "generated" });
-            }
-        } catch (error) {
-            console.error('Error generating DOCX:', error);
-            alert('Error generating DOCX');
-        }
+        //     // Update status
+        //     if (id) {
+        //         await updateDoc(doc(db, "drafts", id), { status: "generated" });
+        //     }
+        // } catch (error) {
+        //     console.error('Error generating DOCX:', error);
+        //     alert('Error generating DOCX');
+        // }
     };
 
     if (loading) {
